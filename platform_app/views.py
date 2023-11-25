@@ -11,6 +11,25 @@ class UserRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
 
+class StudentCreateView(generics.ListCreateAPIView):
+    queryset=Student.objects.all()
+    serializer_class=StudentSerializer
+class StudentRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Student.objects.all()
+    serializer_class = StudentSerializer
+
+class TutorCreateView(generics.ListCreateAPIView):
+    queryset=Tutor.objects.all()
+    serializer_class=TutorSerializer
+class TutorRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
+    queryset=Tutor.objects.all()
+    serializer_class=TutorSerializer
+class AdminCreateView(generics.ListCreateAPIView):
+    queryset=Admin.objects.all()
+    serializer_class=AdminSerializer
+class AdminRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
+    queryset=Admin.objects.all()
+    serializer_class=AdminSerializer
 class CourseListCreateView(generics.ListCreateAPIView):
     queryset = Course.objects.all()
     serializer_class = CourseSerializer

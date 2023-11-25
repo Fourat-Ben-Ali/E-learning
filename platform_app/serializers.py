@@ -7,6 +7,18 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = '__all__'
+class StudentSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Student
+        fields = '__all__'
+class TutorSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Tutor
+        fields = '__all__'    
+class AdminSerializer(serializers.ModelSerializer):
+    class Meta:
+        model=Admin
+        fields = '__all__' 
 
 class CourseSerializer(serializers.ModelSerializer):
     class Meta:

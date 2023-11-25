@@ -5,6 +5,15 @@ urlpatterns = [
     path('users/', UserListCreateView.as_view(), name='user-list'),
     path('users/<int:pk>/',  UserRetrieveUpdateDestroyView.as_view(), name='user-detail'),
 
+    path('students/', StudentCreateView.as_view(), name='student-list'),
+    path('students/<int:pk>/', StudentRetrieveUpdateDestroyView.as_view(), name='student-detail'),
+
+    path('tutors/', TutorCreateView.as_view(), name='tutor-list'),
+    path('tutors/<int:pk>/', TutorRetrieveUpdateDestroyView.as_view(), name='tutor-detail'),
+
+    path('admins/', AdminCreateView.as_view(), name='admin-list'),
+    path('admins/<int:pk>/', AdminRetrieveUpdateDestroyView.as_view(), name='admin-detail'),
+
     path('courses/', CourseListCreateView.as_view(), name='course-list'),
     path('courses/<int:pk>/', CourseRetrieveUpdateDestroyView.as_view(), name='course-detail'),
 
