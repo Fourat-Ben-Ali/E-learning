@@ -1,0 +1,16 @@
+<h1>{{ course.title }}</h1>
+<p>{{ course.description }}</p>
+<p>Nom du professeur : {{ professor_name }}</p>
+<p>Capacité requise : {{ remaining_capacity }}</p>
+
+{% if remaining_capacity > 0 %}
+  <form action="{% url 'enroll_form' course.id %}" method="post">
+    {% csrf_token %}
+    <input type="hidden" name="course_id" value="{{ course.id }}">
+    <button type="submit">S'inscrire au cours</button>
+  </form>
+{% endif %}
+
+<form action="{% url 'course_list' %}">
+  <button type="submit">Retour à la liste des cours</button>
+</form>

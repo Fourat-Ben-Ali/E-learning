@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Inscription au cours</title>
+</head>
+<body>
+    <h1>Inscription au cours "{{ course.title }}"</h1>
+    
+    <form action="{% url 'enroll_student' %}" method="post">
+        {% csrf_token %}
+        <input type="hidden" name="course_id" value="{{ course.id }}">
+        {{ form.as_p }}
+        <button type="submit">S'inscrire</button>
+
+    </form>
+</body>
+</html>

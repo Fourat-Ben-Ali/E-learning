@@ -2,23 +2,28 @@ from django.db import models
 from django.core.validators import EmailValidator
 
 class User(models.Model):
-
     username = models.CharField(max_length=100)
-    password = models.CharField(max_length=255)  
-    email = models.EmailField(validators=[EmailValidator()]) 
+    password = models.CharField(max_length=255)
+    email = models.EmailField(validators=[EmailValidator()])
     date_joined = models.DateField(auto_now_add=True)
+    first_name = models.CharField(max_length=100, blank=True, null=True)
+    last_name = models.CharField(max_length=100, blank=True, null=True)
+    age = models.IntegerField(blank=True, null=True)
 
     def __str__(self):
         return self.username
 
     class Meta:
-        ordering = ['date_joined'] 
-        verbose_name = 'Utilisateur'  
+        ordering = ['date_joined']
+        verbose_name = 'Utilisateur'
         unique_together = ['email', 'username']
+        
+"""class Student(User):
+    # Ajouter les champs spécifiques à l'étudiant ici, s'il y en a
+    enrolled_courses = models.ManyToManyField(Course, related_name='enrolled_students')
 
-class Student(User):
     def __str__(self):
-        return self.username
+        return self.username"""
     
 class Tutor(User):
     def __str__(self):
@@ -36,6 +41,12 @@ class Course(models.Model):
 
     def __str__(self):
         return self.title
+class Student(User):
+    # Ajouter les champs spécifiques à l'étudiant ici, s'il y en a
+    enrolled_courses = models.ManyToManyField(Course, related_name='enrolled_students')
+
+    def __str__(self):
+        return self.username
 
 class Material(models.Model):
     DOCUMENT_TYPES = [
