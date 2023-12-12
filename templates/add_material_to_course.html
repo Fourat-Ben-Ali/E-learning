@@ -1,0 +1,27 @@
+<!-- add_material_to_course.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Add Material to Course</title>
+</head>
+<body>
+    <h2>Add Material to Course "{{ course.title }}"</h2>
+    <form method="post" action="{% url 'add_material_to_course' course.id %}" enctype="multipart/form-data">
+        {% csrf_token %}
+        <label for="title">Material Title:</label>
+        <input type="text" id="title" name="title"><br>
+        <label for="content">Content:</label>
+        <textarea id="content" name="content"></textarea><br>
+        <label for="document_type">Document Type:</label>
+        <select name="document_type" id="document_type">
+            <option value="PDF">PDF</option>
+            <option value="DOC">Document</option>
+            <option value="PPT">Presentation</option>
+        </select><br>
+        <label for="file">Upload PDF:</label>
+        <input type="file" name="file" id="file"><br> 
+        <input type="submit" value="Add Material">
+    </form>
+    <a href="{% url 'manage_course' course.id %}">Back to Course Details</a>
+</body>
+</html>

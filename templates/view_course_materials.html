@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Course Materials</title>
+</head>
+<body>
+    <h2>Course: {{ course.title }}</h2>
+    <h3>Materials:</h3>
+    
+    {% for material in materials %}
+        <p>{{ material.title }}  {{ material.description }}</p>
+        {% if material.file %}
+       
+        <a href="{{ material.file.url }}" download>Download PDF</a>
+       
+        {% endif %}
+        <form method="post" action="{% url 'delete_material' material.id %}">
+            {% csrf_token %}
+            <input type="submit" value="Delete">
+        </form>
+    {% endfor %}
+    <br>
+    <br>
+    <a href="{% url 'manage_course' course.id %}">Back to Course Details</a>
+</body>
+</html>

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Student Grades</title>
+</head>
+<body>
+    <h1>Student Grades</h1>
+    <h2>Student ID: {{ student_id }}</h2>
+
+    <ul>
+        {% for grade in student_grades %}
+            <li>
+                Course: {{ grade.assignment.course.title }} <br>
+                Assignment: {{ grade.assignment.title }} <br>
+                Grade: {{ grade.grade }} <br>
+                Feedback: {{ grade.feedback }} <br><br>
+            </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

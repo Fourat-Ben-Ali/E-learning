@@ -1,9 +1,10 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from .forms import EnrollmentForm
-from platform_app.models import Course, Student, Enrollment
+from platform_app.models import Course, Student, Enrollment,Material,Assignment,Submission,Grade
 from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib import messages
 from django.urls import reverse
+from django.utils import timezone
 
 def dashboard(request):
     return render(request, 'students_dashbord.html')
@@ -98,3 +99,60 @@ def course_already_registered_view(request):
 
 def enrollement_success(request):
     return render(request, 'enrollment_success.html')
+
+def student_courses(request, student_id):
+    # Récupérer l'objet Student ou renvoyer une erreur 404 si l'étudiant n'existe pas
+    student = get_object_or_404(Student, id=student_id)
+
+    # Récupérer tous les enregistrements d'inscription pour cet étudiant
+    enrollments = Enrollment.objects.filter(student=student)
+    print(enrollments) 
+    # Récupérer la liste des cours à partir des enregistrements d'inscription
+    courses = [enrollment.course for enrollment in enrollments]
+    print(courses) 
+    return render(request, 'student_courses.html', {'student': student, 'courses': courses})
+def course_materials(request, course_id ):
+    course = get_object_or_404(Course, id=course_id)
+    materials = Material.objects.filter(course=course)
+    assignments = Assignment.objects.filter(course=course)
+    
+  
+    return render(request, 'course_materials.html', {'course': course, 'materials': materials,'assignments': assignments})
+def submit_assignment(request, assignment_id):
+    assignment = get_object_or_404(Assignment, pk=assignment_id)
+    if request.method == 'POST':
+        username = request.POST['username']
+        submission_content = request.POST['submission_content']
+        pdf_file = request.FILES['pdf']
+        current_student = Student.objects.get(username=username)
+
+        if assignment.due_date < timezone.now().date():
+            return HttpResponse("La date limite pour ce devoir est déjà passée.")
+        else:
+            previous_submission = Submission.objects.filter(student=current_student, assignment=assignment).first()
+
+            if previous_submission:
+                return HttpResponse("Vous avez déjà soumis ce devoir.")
+            else:
+                submission = Submission.objects.create(
+                    student=current_student,
+                    assignment=assignment,
+                    submission_content=submission_content,
+                    pdf=pdf_file
+                )
+                submission.save()
+
+
+                return render(request, 'submission_form.html', {'assignment': assignment})
+    else:
+        return render(request, 'submission_form.html', {'assignment': assignment})
+    
+def grade_detail_view(request, student_id):
+    # Récupérer tous les grades de l'étudiant spécifié
+    student_grades = Grade.objects.filter(student_id=student_id)
+
+    context = {
+        'student_id': student_id,
+        'student_grades': student_grades,
+    }
+    return render(request, 'grade_detail.html', context)

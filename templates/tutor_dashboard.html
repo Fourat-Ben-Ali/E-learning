@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Tutor Dashboard</title>
+</head>
+<body>
+    <h2>Welcome, {{ tutor_name }}</h2>
+    <a href="{% url 'tutor_courses' tutor_id %}">Mes Cours</a>
+    <br>
+    <a href="{% url 'add_course' tutor_id %}">Ajouter un cours</a>
+    <input type="hidden" id="tutor_id" value="{{ tutor_id }}">
+</body>
+</html>

@@ -43,7 +43,7 @@ class Course(models.Model):
         return self.title
 class Student(User):
     # Ajouter les champs spécifiques à l'étudiant ici, s'il y en a
-    enrolled_courses = models.ManyToManyField(Course, related_name='enrolled_students')
+    enrolled_courses = models.ManyToManyField(Course, related_name='enrolled_students',null=True),
 
     def __str__(self):
         return self.username
@@ -60,6 +60,7 @@ class Material(models.Model):
     course = models.ForeignKey(Course, on_delete=models.CASCADE)
     upload_date = models.DateField(auto_now_add=True)
     document_type = models.CharField(max_length=3, choices=DOCUMENT_TYPES)
+    file = models.FileField(upload_to='material_fiels',null=True)
 
     def __str__(self):
         return self.title
@@ -71,21 +72,26 @@ class Enrollment(models.Model):
     enrollment_date = models.DateField(auto_now=True)
 
     def __str__(self):
-     return self.student
+     return self.student.username
 
 class Assignment(models.Model):
     title = models.CharField(max_length=100)
     description = models.CharField(max_length=255)
-    due_date = models.DateField(auto_now_add=True)
+    due_date = models.DateField()
+    course = models.ForeignKey(Course, on_delete=models.CASCADE,default=1) 
+    pdf = models.FileField(upload_to='assignements', null=True) 
     
     def __str__(self):
         return self.title
+        
+
 
 class Submission(models.Model):
     student = models.ForeignKey(Student, on_delete=models.CASCADE)
     assignment = models.ForeignKey(Assignment, on_delete=models.CASCADE)
     submission_content = models.TextField()
     submission_date = models.DateField(auto_now=True)
+    pdf = models.FileField(upload_to='submission', null=True)
     def __str__(self):
         return f"submission by{self.student.username} for {self.assignment.title}"
 

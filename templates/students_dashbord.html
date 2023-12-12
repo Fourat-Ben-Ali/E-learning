@@ -4,11 +4,14 @@
     <meta charset="UTF-8">
     <title>Dashboard</title>
 </head>
-<body>
+<body data-student-id="{{ student_id }}">
     <h1>Tableau de bord</h1>
     <ul>
-        <li><a href="{% url 'course_liste' %}">Liste des Cours Disponibles</a></li>
-        
+        <p>Identifiant de l'étudiant : <span id="student-id">{{ student_id }}</span></p>
+        <li><a href="{% url 'course_liste'  %}">Liste des Cours Disponibles</a></li>
+        <li><a href="{% url 'student_courses' student_id=student_id %}">Mes Cours </a></li>
+        <li><a href="{% url 'grades_student' student_id=student_id %}">Voir mes notes</a></li>
+       
     </ul>
 </body>
 </html>

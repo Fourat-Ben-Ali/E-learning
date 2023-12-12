@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Manage Course</title>
+</head>
+<body>
+    <h2>{{ course.title }}</h2>
+    <p>{{ course.description }}</p>
+    
+    <form method="post" action="{% url 'delete_course' course.id %}">
+        {% csrf_token %}
+        <input type="submit" value="Delete Course" onclick="return confirm('Are you sure you want to delete this course?')">
+    </form>
+
+    <form method="get" action="{% url 'add_material_to_course' course.id %}">
+        {% csrf_token %}
+        <input type="submit" value="Add Material to Course">
+    </form>
+    <form method="get" action="{% url 'view_course_materials' course.id %}">
+        {% csrf_token %}
+        <input type="submit" value="View Course Materials">
+    </form>
+    <form method="get" action="{% url 'edit_course' course.id %}">
+        {% csrf_token %}
+        <input type="submit" value="Edit Course">
+    </form>
+    <form method="get" action="{% url 'course_students' course.id %}">
+        {% csrf_token %}
+        <input type="submit" value="View Enrolled Students">
+    </form>
+    <form method="get" action="{% url 'add_assignment_to_course' course.id %}">
+        {% csrf_token %}
+        <input type="submit" value="Add Assignment">
+    </form>
+    <form method="get" action="{% url 'view_submissions' course.id %}">
+        {% csrf_token %}
+        <input type="submit" value="View Submissions">
+    </form>
+    
+</body>
+</html>

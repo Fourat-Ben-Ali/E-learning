@@ -1,0 +1,30 @@
+<!-- add_grade_to_submission.html -->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Add Grade to Submission</title>
+</head>
+<body>
+    <h2>Assignment: {{ assignment.title }}</h2>
+    <h3>Submissions:</h3>
+    <ul>
+        {% for submission in submissions %}
+        <li>
+            <p>Student: {{ submission.student.username }}</p>
+            <p>Submission: {{ submission.submission_content }}</p>
+            <form method="post">
+                {% csrf_token %}
+                <input type="hidden" name="student_id" value="{{ submission.id }}">
+                <label for="grade">Give Grade:</label>
+                <input type="text" name="grade" id="grade" value="">
+                <label for="feedback">Feedback:</label>
+                <textarea name="feedback" id="feedback"></textarea>
+                <input type="submit" value="Add Grade">
+            </form>
+        </li>
+        {% endfor %}
+    </ul>
+    <a href="{% url 'manage_course' assignment.course.id %}">Back to Manage Course</a>
+</body>
+</html>

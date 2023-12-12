@@ -1,0 +1,23 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Student Courses</title>
+</head>
+<body>
+    <h1>Student: {{ student }}</h1>
+
+    <h2>Courses:</h2>
+    <form id="studentIdForm" method="post">
+        {% csrf_token %}
+        <input type="hidden" id="studentId" name="studentId" value="{{ student_id }}">
+    </form>
+    <ul>
+       
+        {% for course in courses %}
+        <li><a href="{% url 'course_materials' course.id  %}">{{ course.title }}</a></li>
+        
+        {% endfor %}
+    </ul>
+</body>
+</html>

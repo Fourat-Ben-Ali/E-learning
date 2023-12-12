@@ -1,0 +1,48 @@
+<!-- course_materials.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ course.title }} Materials</title>
+    
+</head>
+<body>
+    <h1>{{ course.title }} Materials</h1>
+    <h2>Description:</h2>
+    {% if course.description %}
+        <p>{{ course.description }}</p>
+    {% else %}
+        <p>No description available.</p>
+    {% endif %}
+
+    <h2>Materials:</h2>
+    <ul>
+        {% for material in materials %}
+            <li>
+                <h3>{{ material.title }}</h3>
+                <p>Type: {{ material.document_type }}</p>
+                <p>Content: {{ material.content }}</p>
+                {% if material.file %}
+                <a href="{{ material.file.url }}" download>Download PDF</a>
+            {% endif %}
+            </li>
+        {% endfor %}
+    </ul>
+    <h2>Assignments:</h2>
+    <ul>
+        {% for assignment in assignments %}
+        <li>
+            <h3>{{ assignment.title }}</h3>
+            <p>Description: {{ assignment.description }}</p>
+            <p>Due Date: {{ assignment.due_date }}</p>
+            {% if assignment.pdf %}
+                <a href="{{ assignment.pdf.url }}" download>Download Assignment PDF</a>
+            {% endif %}
+            <form method="get" action="{% url 'submit_assignment' assignment.id %}">
+                {% csrf_token %}
+                <input type="submit" value="Submit Assignment">
+            </form>
+        </li>
+    {% endfor %}
+    </ul>
+</body>
+</html>

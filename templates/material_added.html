@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Material Added</title>
+</head>
+<body>
+    <h2>Material Added Successfully!</h2>
+    <p>Title: {{ material.title }}</p>
+    <p>Content: {{ material.content }}</p>
+    <p>Document Type: {{ material.document_type }}</p>
+    <a href="{% url 'tutor_dashboard' tutor_id=course.tutor.id %}">Back to Tutor Dashboard</a>
+</body>
+</html>

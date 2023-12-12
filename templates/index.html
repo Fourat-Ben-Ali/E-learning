@@ -1,5 +1,34 @@
+<!DOCTYPE html>
 <html>
-    <body>
-        <p>welcome</p>
-    </body>
+<head>
+    <title>Page d'accueil</title>
+</head>
+<body>
+    <h1>Bienvenue sur la plateforme d'apprentissage</h1>
+    <button onclick="showLoginOptions()">Login</button>
+
+    <div id="loginOptions" style="display: none;">
+        <h2>Choisissez votre type de compte :</h2>
+        <button onclick="redirectToLogin('student')">Étudiant</button>
+        <button onclick="redirectToLogin('tutor')">Enseignant</button>
+        <button onclick="redirectToLogin('admin')">Administrateur</button>
+    </div>
+
+    <script>
+        function showLoginOptions() {
+            var loginOptions = document.getElementById('loginOptions');
+            loginOptions.style.display = 'block';
+        }
+
+        function redirectToLogin(type) {
+            if (type === 'student') {
+                window.location.href = '/login';  // Redirection vers la page de connexion étudiant
+            } else if (type === 'tutor') {
+                window.location.href = '/tutor_login';  // Redirection vers la page de connexion enseignant
+            } else if (type === 'admin') {
+                window.location.href = '/admin';  // Redirection vers la page de connexion administrateur
+            }
+        }
+    </script>
+</body>
 </html>

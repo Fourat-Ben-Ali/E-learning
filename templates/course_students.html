@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Course Students</title>
+</head>
+<body>
+    <h2>{{ course.title }}</h2>
+    <h3>Students Enrolled:</h3>
+    <ul>
+        {% for student in students %}
+            <li>{{ student.username }}
+                
+            </li>
+            <!-- Vous pouvez afficher d'autres détails d'étudiant si nécessaire -->
+        {% empty %}
+            <li>No students enrolled yet.</li>
+        {% endfor %}
+    </ul>
+    <a href="{% url 'manage_course' course.id %}">Back to Course Details</a>
+</body>
+</html>

@@ -1,0 +1,51 @@
+<!-- view_submissions.html -->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>View Submissions</title>
+</head>
+<body>
+    <h2>Course: {{ course.title }}</h2>
+    <h3>Assignments:</h3>
+    <ul>
+        {% for assignment in assignments %}
+        <li>
+            <strong>{{ assignment.title }}</strong>
+            <ul>
+                {% for submission in submissions %}
+                {% if submission.assignment == assignment %}
+                <li>
+                    <p>Student: {{ submission.student.username }}</p>
+                    <p>Submission: {{ submission.submission_content }}</p>
+                    {% if submission.pdf %}
+                    <a href="{{ submission.pdf.url }}" download>Download PDF</a>
+                    
+                    {% endif %}
+                    
+
+                    <form method="post" action="{% url 'grade_submission' submission.id %}">
+                        {% csrf_token %}
+                        <input type="hidden" name="student_id" value="{{ submission.student.id }}">
+                        <label for="grade">Give Grade:</label>
+                        <input type="text" name="grade" id="grade" value="{{ submission.grade }}">
+                        <label for="feedback">Feedback:</label>
+                        <textarea name="feedback" id="feedback">{{ submission.feedback }}</textarea>
+                        <input type="submit" value="Grade Submission">
+                    </form>
+                </li>
+                {% endif %}
+                {% endfor %}
+                <li>
+                    <form method="get" action="{% url 'add_grade_to_submission' assignment.id %}">
+                        {% csrf_token %}
+                        <input type="submit" value="Add Grade for Assignment">
+                    </form>
+                </li>
+            </ul>
+        </li>
+        {% endfor %}
+    </ul>
+    
+</body>
+</html>
